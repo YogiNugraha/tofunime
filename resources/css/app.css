@@ -1,0 +1,89 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+
+@theme {
+    --color-parchment: #F8F6F0;
+    --color-alabaster: #EFECE6;
+    --color-surface: #FFFFFF;
+    --color-stone-warm: #E2DCC8;
+
+    --color-mana: #2B7A9B;
+    --color-mana-hover: #1F5C77;
+
+    --color-gold: #C59B27;
+    --color-gold-soft: #FBF7E8;
+
+    --color-ink: #1E293B;
+    --color-ink-muted: #475569;
+
+    --font-serif: 'Cinzel', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+@layer base {
+    html {
+        font-family: var(--font-sans);
+        color: var(--color-ink);
+        background-color: var(--color-parchment);
+        scroll-behavior: smooth;
+    }
+
+    body {
+        min-height: 100vh;
+        background-color: var(--color-parchment);
+        color: var(--color-ink);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+        background-color: rgba(43, 122, 155, 0.2);
+        color: #1E293B;
+    }
+
+    /* ========================================================
+       Custom Scrollbar System (Millishion Light Mode Theme)
+       Default 6px, expands to 8px on hover/active
+       ======================================================== */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #D3CBBE transparent;
+    }
+
+    /* WebKit / Chromium (Chrome, Edge, Safari, Brave, Opera) */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #D3CBBE;
+        border-radius: 9999px;
+        border: 1px solid transparent;
+        background-clip: padding-box;
+        transition: background-color 0.2s ease, border-width 0.2s ease;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #2B7A9B;
+        border: 0px solid transparent;
+    }
+
+    ::-webkit-scrollbar-thumb:active {
+        background-color: #1F5C77;
+        border: 0px solid transparent;
+    }
+
+    ::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+}
