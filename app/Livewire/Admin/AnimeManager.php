@@ -73,6 +73,7 @@ class AnimeManager extends Component
         $anime = Anime::find($animeId);
         if ($anime) {
             $anime->update(['is_featured' => ! $anime->is_featured]);
+            app(TofunimeCacheService::class)->flushHomeAndScheduleCache();
             session()->flash('message', "Status featured anime '{$anime->title}' berhasil diperbarui.");
         }
     }

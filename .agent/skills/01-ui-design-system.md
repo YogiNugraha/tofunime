@@ -106,7 +106,7 @@ Nama brand adalah **Tofunime** (kombinasi nuansa bersih seputih *Tofu* dan arsit
 
 ### A. Halaman Utama (Desktop-1 Layout)
 1. **Navbar (`h-20`):** Kiri: Brand **TOFUNIME** (`font-serif font-semibold text-2xl tracking-wider text-[#1E293B]` dengan titik aksen `#C59B27`). Tengah: `Beranda`, `Katalog Anime`, `Ongoing`, `Jadwal Rilis`, `Genre & Tag`. Kanan: Livewire Search Modal & tombol `Masuk`.
-2. **Hero Showcase (Diagonal Split):** Menampilkan *Featured Anime* dengan artwork lebar di kanan dan area teks berlatar `#F8F6F0` di kiri. Menampilkan musim/tahun (warna `#C59B27`), Judul `<h1>`, 3 Genre utama, sinopsis 2 baris, dan tombol bulat `Tonton Sekarang` (`bg-[#2B7A9B] text-white px-7 py-3 rounded-full font-semibold`).
+2. **Hero Showcase (Seamless Split Hero Model):** Menampilkan *Featured Anime* dengan background split model tanpa border pemisah bawah dan tanpa gradasi atas/bawah. Efek blend ditembuskan penuh secara horizontal dari sisi kiri hingga mentok ke kanan dengan 3 level transisi: **Solid** (100% warna latar `#F8F6F0` parchment di sisi kiri untuk area teks agar sangat mudah dibaca), **50% Blend** (di area tengah sehingga foto anime membaur halus dengan warna latar), dan **0% Blend** (100% foto utuh dan tajam di sisi kanan mentok tanpa ada kabut atau sekat kaku). Konten tetap menyajikan musim/tahun (warna `#C59B27`), Judul `<h1>`, 3 Genre utama, sinopsis 3 baris, tombol bulat `Tonton Sekarang` (`bg-[#2B7A9B] text-white px-7 py-3 rounded-full font-semibold`), dan skor resmi.
 3. **Section "Update Episode Terbaru" (Grid 4 Kolom Besar):** Dilengkapi pill filter (`Semua`, `TV Series`, `Movie`, `OVA`) di sisi kanan header.
 4. **Section "Studio & Direktori Pilihan":**
    - 1 baris Grid 6 kolom poster kompak.

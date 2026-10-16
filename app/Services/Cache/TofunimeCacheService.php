@@ -20,23 +20,53 @@ class TofunimeCacheService
     public const TTL_LONG = 86400;    // 1 day
 
     /**
-     * Get Featured Hero anime with relationships.
-     * Caches ID to prevent PHP object serialization (__PHP_Incomplete_Class) issues.
+     * Get multiple Featured Hero animes for carousel slider.
+     *
+     * @return Collection<int, Anime>
+     */
+    public function getFeaturedHeroes(int $limit = 5): Collection
+    {
+        $heroIds = Cache::remember("tofunime_featured_hero_ids_{$limit}", self::TTL_MEDIUM, function () use ($limit) {
+            $featuredIds = Anime::where('is_featured', true)->latest('updated_at')->take($limit)->pluck('id')->toArray();
+            if (count($featuredIds) < $limit) {
+                $needed = $limit - count($featuredIds);
+                $fallbackIds = Anime::whereNotIn('id', $featuredIds)
+                    ->orderByDesc('rating_score')
+                    ->take($needed)
+                    ->pluck('id')
+                    ->toArray();
+                $featuredIds = array_merge($featuredIds, $fallbackIds);
+            }
+
+            return $featuredIds;
+        });
+
+        if (! empty($heroIds)) {
+            $animes = Anime::with(['studio', 'season', 'genres', 'themes', 'demographics', 'people'])
+                ->whereIn('id', $heroIds)
+                ->get();
+
+            /** @var Collection<int, Anime> $ordered */
+            $ordered = collect($heroIds)
+                ->map(fn ($id) => $animes->firstWhere('id', $id))
+                ->filter()
+                ->values();
+
+            return $ordered;
+        }
+
+        return Anime::with(['studio', 'season', 'genres', 'themes', 'demographics', 'people'])
+            ->orderByDesc('rating_score')
+            ->take($limit)
+            ->get();
+    }
+
+    /**
+     * Get single Featured Hero anime with relationships.
      */
     public function getFeaturedHero(): ?Anime
     {
-        $heroId = Cache::remember('tofunime_featured_hero_id', self::TTL_MEDIUM, function () {
-            return Anime::where('is_featured', true)->value('id') ?? Anime::value('id');
-        });
-
-        if ($heroId) {
-            $anime = Anime::with(['studio', 'season', 'genres', 'themes'])->find($heroId);
-            if ($anime) {
-                return $anime;
-            }
-        }
-
-        return Anime::with(['studio', 'season', 'genres', 'themes'])->first();
+        return $this->getFeaturedHeroes(1)->first();
     }
 
     /**
@@ -129,6 +159,8 @@ class TofunimeCacheService
     {
         Cache::forget('tofunime_featured_hero');
         Cache::forget('tofunime_featured_hero_id');
+        Cache::forget('tofunime_featured_hero_ids_5');
+        Cache::forget('tofunime_featured_hero_ids_1');
         Cache::forget('tofunime_recent_episodes_8');
         Cache::forget('tofunime_recent_episode_ids_8');
         Cache::forget('tofunime_recent_episodes_12');

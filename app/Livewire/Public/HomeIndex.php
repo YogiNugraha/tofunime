@@ -25,7 +25,8 @@ class HomeIndex extends Component
 
     public function render(TofunimeCacheService $cache)
     {
-        $featuredAnime = $cache->getFeaturedHero();
+        $featuredAnimes = $cache->getFeaturedHeroes(5);
+        $featuredAnime = $featuredAnimes->first();
         $iconicStudios = $cache->getIconicStudios();
 
         $recentQuery = Episode::with('anime')->latest('aired_at');
@@ -51,6 +52,7 @@ class HomeIndex extends Component
             ->get();
 
         return view('livewire.public.home-index', compact(
+            'featuredAnimes',
             'featuredAnime',
             'recentUpdates',
             'iconicStudios',
