@@ -57,5 +57,14 @@ Agent wajib mengeksekusi proyek ini secara bertahap:
 - **CMS Admin:** Single-door grabber studio, master anime manager dengan multi-filter, dan metadata editor.
 - **Quality Assurance:** 22 Automated Feature Tests (174 assertions) Passed 100%.
 
-### 🚀 FASE 2: Upcoming Features & Next Roadmap
-- Siap untuk pengembangan fitur lanjutan fase 2 sesuai instruksi pengguna berikutnya.
+### ✅ FASE 2 - Tahap 1: Revisi Hero Showcase & Multi-Featured Carousel (SELESAI)
+- **Seamless Split Hero Background:** 3-level horizontal blend (100% solid parchment `#F8F6F0` di sisi teks kiri, 50% blend di tengah, dan 0% blend/tajam di sisi kanan mentok tanpa pemisah bawah atau gradasi vertikal).
+- **Multi-Featured Carousel (Alpine.js):** Mendukung banyak anime featured sekaligus, rotasi otomatis durasi 6 detik dengan crossfade halus.
+- **CSS Grid Stacking Anti-Jeglug:** Seluruh slide foreground berada di sel grid yang sama (`col-start-1 row-start-1 min-h-[380px] lg:min-h-[360px]`), mencegah tumpukan layer ke bawah dan menghilangkan hentakan vertikal (*jeglug*) saat transisi.
+- **Kapsul Loader & Navigasi Kustom:** Kontrol kapsul terpadu `(←) [ - - = - - ] (→)` dengan animasi *filling bar* warna Mana Blue (`#2B7A9B`) sesuai interval timer 50ms, serta mendukung lompatan slide instan via klik.
+- **Targeted Hover Pause:** Pause timer presisi yang hanya aktif ketika kursor berada di atas Judul Anime atau tombol "Tonton Sekarang".
+- **Otomasi Cache & Admin:** `AnimeObserver` untuk auto-invalidation cache hero/schedule, dan multi-select toggle featured pada CMS `AnimeManager`.
+- **Quality Assurance:** 22 Automated Feature Tests (174 assertions) Passed 100%.
+
+### 🚀 FASE 2 - Tahap Selanjutnya: Upcoming Roadmap
+- Siap melanjutkan fitur dan penyempurnaan berikutnya di Fase 2 sesuai arahan pengguna.

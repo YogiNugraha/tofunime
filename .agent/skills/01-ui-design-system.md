@@ -100,13 +100,28 @@ Nama brand adalah **Tofunime** (kombinasi nuansa bersih seputih *Tofu* dan arsit
     - Tampilkan skor sebagai teks bersih minimalis (`★ 9.10`), bukan dibungkus pill box abu-abu.
     - Teks sekunder metadata di bawah judul dibuat subtle (`TV · Ongoing · 2026`), tanpa background badge.
 
+13. **Standar Carousel Multi-Featured & Kapsul Indikator (Anti-Jeglug & Precision Hover Rules):**
+    - **CSS Grid Stacking Anti-Jeglug:** Saat membuat carousel dengan transisi fade/crossfade, seluruh slide foreground WAJIB dibungkus dalam container CSS Grid satu sel (`grid grid-cols-1 grid-rows-1 items-start min-h-[380px] lg:min-h-[360px]`) dan setiap slide diberi class `col-start-1 row-start-1`.
+      - **DILARANG** meletakkan slide yang saling bertransisi secara berurutan dalam *normal block flow*, karena saat transisi kedua elemen akan muncul bersamaan sehingga slide kedua terdorong ke bawah slide pertama dan memicu lompatan layout vertikal (*jeglug*).
+      - Transisi antar slide wajib menggunakan pure opacity crossfade (`x-transition:enter="transition-opacity duration-400 ease-out"`, `x-transition:leave="transition-opacity duration-250 ease-in"`).
+    - **Aturan Presisi Hover Pause (Targeted Hover Only):**
+      - **DILARANG KERAS** memasang listener pause autoplay (`@mouseenter="paused = true"`) di level container luar `<section>` hero, karena akan membekukan timer secara tidak sengaja saat kursor sekadar lewat di ruang kosong hero banner.
+      - Listener pause **HANYA** boleh dipasang secara presisi pada:
+        1. Blok **Judul Anime** (`<h1>` & subjudul).
+        2. Tombol CTA utama **"Tonton Sekarang"**.
+      - Setiap fungsi navigasi manual (`next()`, `prev()`, `goTo(index)`) wajib otomatis mereset `paused = false` dan me-reset nilai progress agar progress bar langsung berjalan kembali tanpa tertahan.
+    - **Kapsul Indikator Dinamis (Millishion Custom Capsule):**
+      - Komponen navigasi terdiri dari: Tombol panah kiri bulat (`w-9 h-9 rounded-full bg-surface border border-stone-warm`), Kapsul track bulat (`bg-alabaster border border-stone-warm rounded-full px-2.5 py-1.5 flex items-center space-x-1.5`), dan Tombol panah kanan bulat.
+      - Setiap pill segment mewakili 1 slide anime: slide aktif melebar (`w-9 bg-surface border border-stone-warm/80`), slide inaktif (`w-6 bg-surface/70 border border-stone-warm/40`).
+      - Pill aktif menampilkan bar progress animasi warna tema Mana Blue (`bg-mana rounded-full transition-[width] duration-75 ease-linear`) yang terisi dari 0% ke 100% mengikuti interval timer slide (50ms).
+
 ---
 
 ## 3. Struktur Layout Tofunime (Adaptasi Filmagnet Desktop-1 & Desktop-2)
 
 ### A. Halaman Utama (Desktop-1 Layout)
 1. **Navbar (`h-20`):** Kiri: Brand **TOFUNIME** (`font-serif font-semibold text-2xl tracking-wider text-[#1E293B]` dengan titik aksen `#C59B27`). Tengah: `Beranda`, `Katalog Anime`, `Ongoing`, `Jadwal Rilis`, `Genre & Tag`. Kanan: Livewire Search Modal & tombol `Masuk`.
-2. **Hero Showcase (Seamless Split Hero Model):** Menampilkan *Featured Anime* dengan background split model tanpa border pemisah bawah dan tanpa gradasi atas/bawah. Efek blend ditembuskan penuh secara horizontal dari sisi kiri hingga mentok ke kanan dengan 3 level transisi: **Solid** (100% warna latar `#F8F6F0` parchment di sisi kiri untuk area teks agar sangat mudah dibaca), **50% Blend** (di area tengah sehingga foto anime membaur halus dengan warna latar), dan **0% Blend** (100% foto utuh dan tajam di sisi kanan mentok tanpa ada kabut atau sekat kaku). Konten tetap menyajikan musim/tahun (warna `#C59B27`), Judul `<h1>`, 3 Genre utama, sinopsis 3 baris, tombol bulat `Tonton Sekarang` (`bg-[#2B7A9B] text-white px-7 py-3 rounded-full font-semibold`), dan skor resmi.
+2. **Hero Showcase (Multi-Featured Split Hero Carousel):** Menampilkan carousel *Featured Anime* dengan background split model tanpa border pemisah bawah dan tanpa gradasi atas/bawah. Efek blend ditembuskan penuh secara horizontal dari sisi kiri hingga mentok ke kanan dengan 3 level transisi: **Solid** (100% warna latar `#F8F6F0` parchment di sisi kiri untuk area teks), **50% Blend** (di area tengah membaur halus dengan artwork), dan **0% Blend** (100% artwork utuh dan tajam di sisi kanan mentok). Dilengkapi rotasi otomatis multi-anime (durasi 6 detik per slide), CSS Grid stacking anti-jeglug, kontrol indikator kapsul dengan animasi progress bar tema Mana Blue (`#2B7A9B`), serta jeda hover presisi (hanya saat kursor berada di judul atau tombol "Tonton Sekarang"). Konten tetap menyajikan musim/tahun (warna `#C59B27`), Judul `<h1>`, 3 Genre utama, sinopsis 3 baris, tombol bulat `Tonton Sekarang` (`bg-[#2B7A9B] text-white px-7 py-3 rounded-full font-semibold`), dan skor resmi.
 3. **Section "Update Episode Terbaru" (Grid 4 Kolom Besar):** Dilengkapi pill filter (`Semua`, `TV Series`, `Movie`, `OVA`) di sisi kanan header.
 4. **Section "Studio & Direktori Pilihan":**
    - 1 baris Grid 6 kolom poster kompak.
